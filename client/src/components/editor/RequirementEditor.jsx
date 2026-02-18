@@ -36,8 +36,6 @@ export default function RequirementEditor({ node }) {
         <div className="editor-header-top">
           <span className="editor-node-id">{node.id}</span>
           <span className="editor-node-type">{node.type}</span>
-          {fields.type && <span className="req-type-badge">{fields.type}</span>}
-          {fields.priority && <span className="req-priority-badge">{fields.priority}</span>}
           <StatusDropdown
             currentStatus={node.status}
             onTransition={(s) => saveStatus({ status: s, author: 'user', authorType: 'human' })}
@@ -58,35 +56,6 @@ export default function RequirementEditor({ node }) {
           />
         </div>
 
-        <div className="req-row">
-          <div className="field-group" style={{ flex: 1 }}>
-            <label>Priority</label>
-            <select
-              value={fields.priority || ''}
-              onChange={(e) => { setFields((f) => ({ ...f, priority: e.target.value })); }}
-              onBlur={handleBlur}
-            >
-              <option value="">—</option>
-              <option value="Must">Must</option>
-              <option value="Should">Should</option>
-              <option value="Could">Could</option>
-            </select>
-          </div>
-          <div className="field-group" style={{ flex: 1 }}>
-            <label>Type</label>
-            <select
-              value={fields.type || ''}
-              onChange={(e) => { setFields((f) => ({ ...f, type: e.target.value })); }}
-              onBlur={handleBlur}
-            >
-              <option value="">—</option>
-              <option value="Functional">Functional</option>
-              <option value="Non-functional">Non-functional</option>
-              <option value="Constraint">Constraint</option>
-            </select>
-          </div>
-        </div>
-
         <div className="field-group">
           <label>Acceptance Criteria <span style={{ color: 'var(--text-2)', fontWeight: 400 }}>(one per line)</span></label>
           <textarea
@@ -96,16 +65,6 @@ export default function RequirementEditor({ node }) {
             rows={5}
             placeholder="- The system shall..."
           />
-        </div>
-
-        <div className="field-group">
-          <label>Risks</label>
-          <textarea value={fields.risks || ''} onChange={(e) => setFields((f) => ({ ...f, risks: e.target.value }))} onBlur={handleBlur} rows={2} />
-        </div>
-
-        <div className="field-group">
-          <label>Notes</label>
-          <textarea value={fields.notes || ''} onChange={(e) => setFields((f) => ({ ...f, notes: e.target.value }))} onBlur={handleBlur} rows={2} />
         </div>
 
         {node.payloadVersions && node.payloadVersions.length > 0 && (
