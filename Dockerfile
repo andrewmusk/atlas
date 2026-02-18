@@ -7,9 +7,10 @@ RUN apk add --no-cache openssl
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Provide a dummy DATABASE_URL so prisma generate (postinstall) can validate the schema.
-# The real DATABASE_URL is supplied at runtime via environment variables.
-ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+# Dummy DATABASE_URL for prisma generate at build time only.
+# ARG does not persist into the running container — the real DATABASE_URL
+# is injected by Render at runtime.
+ARG DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 
 RUN npm install
 COPY . .
