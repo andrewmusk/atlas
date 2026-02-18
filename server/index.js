@@ -26,14 +26,12 @@ app.use('/api/nodes', childrenRouter);
 app.use('/api/nodes', dependenciesRouter);
 app.use('/api/nodes', chatRouter);
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  const distPath = join(__dirname, '../dist/public');
-  app.use(express.static(distPath));
-  app.get('*', (_req, res) => {
-    res.sendFile(join(distPath, 'index.html'));
-  });
-}
+// Serve static files (Vite build output)
+const distPath = join(__dirname, '../dist/public');
+app.use(express.static(distPath));
+app.get('*', (_req, res) => {
+  res.sendFile(join(distPath, 'index.html'));
+});
 
 app.use(errorHandler);
 
