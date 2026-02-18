@@ -22,11 +22,13 @@
   display: inline-block;
 }
 
+.status-draft { background: var(--status-draft); color: #b8a9d4; }
 .status-not_started { background: var(--status-not_started); color: #aaa; }
 .status-building { background: var(--status-building); color: #111; }
 .status-built { background: var(--status-built); color: #fff; }
 .status-deprecated { background: var(--status-deprecated); color: #ccc; }
 
+.status-badge.status-draft.compact .status-dot { background: var(--status-draft); }
 .status-badge.compact .status-not_started,
 .status-badge.status-not_started.compact .status-dot { background: var(--status-not_started); }
 .status-badge.status-building.compact .status-dot { background: var(--status-building); }

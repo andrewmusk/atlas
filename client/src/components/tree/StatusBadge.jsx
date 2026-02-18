@@ -1,6 +1,7 @@
 import './StatusBadge.css';
 
 const LABELS = {
+  draft: 'draft',
   not_started: 'not started',
   building: 'building',
   built: 'built',

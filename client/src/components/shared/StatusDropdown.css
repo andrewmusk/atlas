@@ -9,6 +9,7 @@
   width: auto;
 }
 
+.status-dropdown[data-status="draft"] { border-color: var(--status-draft); color: var(--status-draft); }
 .status-dropdown[data-status="not_started"] { border-color: var(--status-not_started); }
 .status-dropdown[data-status="building"] { border-color: var(--status-building); color: var(--status-building); }
 .status-dropdown[data-status="built"] { border-color: var(--status-built); color: var(--status-built); }
