@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useUpdateNode, useUpdateStatus } from '../../hooks/useNode.js';
-import StatusDropdown from '../shared/StatusDropdown.jsx';
+import { useUpdateNode } from '../../hooks/useNode.js';
+import StatusBadge from '../tree/StatusBadge.jsx';
 import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import './NodeEditor.css';
 import './RequirementEditor.css';
@@ -19,7 +19,6 @@ export default function RequirementEditor({ node }) {
       : node.payload.acceptance_criteria || ''
   );
   const { mutate: savePayload } = useUpdateNode(node.id);
-  const { mutate: saveStatus } = useUpdateStatus(node.id);
 
   const handleBlur = () => {
     const acceptance_criteria = criteriaText.split('\n').filter((s) => s.trim());
@@ -34,12 +33,8 @@ export default function RequirementEditor({ node }) {
     <div className="editor-container">
       <div className="editor-header">
         <div className="editor-header-top">
-          <span className="editor-node-id">{node.id}</span>
           <span className="editor-node-type">{node.type}</span>
-          <StatusDropdown
-            currentStatus={node.status}
-            onTransition={(s) => saveStatus({ status: s, author: 'user', authorType: 'human' })}
-          />
+          <StatusBadge status={node.status} />
         </div>
         <div className="editor-node-name">{displayName}</div>
       </div>

@@ -24,14 +24,8 @@
 .editor-header-top {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
   margin-bottom: 6px;
-}
-
-.editor-node-id {
-  font-size: 11px;
-  color: var(--accent);
-  font-family: var(--font-mono);
 }
 
 .editor-node-type {

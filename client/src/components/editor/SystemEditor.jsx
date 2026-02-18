@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useUpdateNode } from '../../hooks/useNode.js';
+import StatusBadge from '../tree/StatusBadge.jsx';
 import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import ChildrenSection from './ChildrenSection.jsx';
 import './NodeEditor.css';
@@ -14,8 +15,8 @@ export default function SystemEditor({ node }) {
     <div className="editor-container">
       <div className="editor-header">
         <div className="editor-header-top">
-          <span className="editor-node-id">{node.id}</span>
           <span className="editor-node-type">{node.type}</span>
+          <StatusBadge status={node.status} />
         </div>
         <div className="editor-node-name">{fields.name || node.id}</div>
       </div>

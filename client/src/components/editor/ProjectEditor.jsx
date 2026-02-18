@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useUpdateNode, useDeleteNode } from '../../hooks/useNode.js';
 import useAtlasStore from '../../store/useAtlasStore.js';
+import StatusBadge from '../tree/StatusBadge.jsx';
 import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import ConfirmModal from '../shared/ConfirmModal.jsx';
 import './NodeEditor.css';
@@ -40,8 +41,8 @@ export default function ProjectEditor({ node }) {
     <div className="editor-container">
       <div className="editor-header">
         <div className="editor-header-top">
-          <span className="editor-node-id">{node.id}</span>
           <span className="editor-node-type">{node.type}</span>
+          <StatusBadge status={node.status} />
         </div>
         <div className="editor-node-name">{fields.name || node.id}</div>
       </div>
