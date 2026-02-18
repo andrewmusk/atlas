@@ -52,7 +52,7 @@ export default function TreeNode({ node, depth }) {
 
   const displayName =
     node.payload?.name ||
-    node.payload?.statement?.substring(0, 50) ||
+    node.payload?.statement?.substring(0, 35) ||
     node.payload?.description?.substring(0, 50) ||
     node.id;
 
@@ -78,8 +78,6 @@ export default function TreeNode({ node, depth }) {
         <span className="tree-label" title={displayName}>
           {displayName}
         </span>
-
-        <span className="tree-node-id">{node.id}</span>
 
         <StatusBadge status={node.status} compact />
 

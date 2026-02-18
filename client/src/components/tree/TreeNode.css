@@ -20,10 +20,6 @@
   color: var(--text-0);
 }
 
-.tree-node-row.selected .tree-node-id {
-  color: var(--accent);
-}
-
 .tree-chevron {
   width: 18px;
   height: 18px;
@@ -65,13 +61,6 @@
   white-space: nowrap;
   font-size: 12px;
   color: var(--text-0);
-}
-
-.tree-node-id {
-  font-size: 10px;
-  color: var(--text-2);
-  flex-shrink: 0;
-  font-family: var(--font-mono);
 }
 
 .tree-add-btn {

@@ -25,10 +25,6 @@ export default function RequirementEditor({ node }) {
     savePayload({ payload: { ...fields, acceptance_criteria } });
   };
 
-  const displayName = fields.statement
-    ? fields.statement.substring(0, 60) + (fields.statement.length > 60 ? '…' : '')
-    : node.id;
-
   return (
     <div className="editor-container">
       <div className="editor-header">
@@ -36,7 +32,6 @@ export default function RequirementEditor({ node }) {
           <span className="editor-node-type">{node.type}</span>
           <StatusBadge status={node.status} />
         </div>
-        <div className="editor-node-name">{displayName}</div>
       </div>
 
       <div className="editor-body">
