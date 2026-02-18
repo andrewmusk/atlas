@@ -1,0 +1,17 @@
+.chat-thread {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.thread-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-2);
+  font-size: 12px;
+  text-align: center;
+  padding: 20px;
+}

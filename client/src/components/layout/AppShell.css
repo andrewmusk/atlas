@@ -1,0 +1,16 @@
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr 380px;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-0);
+}
+
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  background: var(--bg-0);
+}

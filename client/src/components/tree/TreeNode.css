@@ -1,0 +1,103 @@
+.tree-node-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  cursor: pointer;
+  padding-right: 8px;
+  user-select: none;
+  border-radius: 0;
+  transition: background 0.08s;
+  position: relative;
+}
+
+.tree-node-row:hover {
+  background: var(--bg-2);
+}
+
+.tree-node-row.selected {
+  background: var(--accent-dim);
+  color: var(--text-0);
+}
+
+.tree-node-row.selected .tree-node-id {
+  color: var(--accent);
+}
+
+.tree-chevron {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--text-1);
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 3px;
+}
+
+.tree-chevron:hover {
+  color: var(--text-0);
+  background: var(--bg-3);
+}
+
+.tree-chevron-placeholder {
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.tree-icon {
+  font-size: 11px;
+  color: var(--text-2);
+  flex-shrink: 0;
+  width: 12px;
+  text-align: center;
+}
+
+.tree-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--text-0);
+}
+
+.tree-node-id {
+  font-size: 10px;
+  color: var(--text-2);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+
+.tree-add-btn {
+  width: 18px;
+  height: 18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-2);
+  border-radius: 3px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tree-node-row:hover .tree-add-btn {
+  display: flex;
+}
+
+.tree-add-btn:hover {
+  background: var(--bg-3);
+  color: var(--accent);
+}
+
+.tree-children-loading {
+  font-size: 11px;
+  color: var(--text-2);
+  padding: 4px 0;
+}

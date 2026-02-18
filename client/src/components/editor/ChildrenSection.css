@@ -1,0 +1,91 @@
+.children-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.children-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.children-count {
+  background: var(--bg-2);
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.children-empty {
+  font-size: 12px;
+  color: var(--text-2);
+  padding: 6px 0;
+}
+
+.children-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.child-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius);
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.1s, border-color 0.1s;
+  font-family: var(--font-mono);
+}
+
+.child-row:hover {
+  background: var(--bg-2);
+  border-color: var(--border-light);
+}
+
+.child-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.child-id {
+  font-size: 10px;
+  color: var(--accent);
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.child-name {
+  font-size: 12px;
+  color: var(--text-0);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.child-arrow {
+  font-size: 14px;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.child-row:hover .child-arrow {
+  color: var(--text-0);
+}

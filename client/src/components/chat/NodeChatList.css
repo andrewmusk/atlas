@@ -1,0 +1,102 @@
+.node-chat-list {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-1);
+  flex-shrink: 0;
+}
+
+.node-chat-list-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.node-chat-list-toggle:hover { color: var(--text-0); }
+
+.toggle-chevron {
+  font-size: 10px;
+  color: var(--text-2);
+}
+
+.toggle-hint {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-2);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: auto;
+}
+
+.node-chat-items {
+  padding: 0 8px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.node-chat-empty {
+  font-size: 11px;
+  color: var(--text-2);
+  padding: 6px 6px;
+}
+
+.node-chat-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-mono);
+  transition: background 0.08s;
+}
+
+.node-chat-item:hover {
+  background: var(--bg-2);
+}
+
+.node-chat-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.node-chat-id {
+  font-size: 10px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.node-chat-name {
+  font-size: 12px;
+  color: var(--text-1);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.node-chat-arrow {
+  font-size: 13px;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.node-chat-item:hover .node-chat-arrow { color: var(--text-0); }

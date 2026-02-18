@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Node {
+  id       String  @id
+  type     String
+  status   String  @default("not_started")
+  parentId String? @map("parent_id")
+  parent   Node?   @relation("NodeTree", fields: [parentId], references: [id])
+  children Node[]  @relation("NodeTree")
+  payload  Json    @default("{}")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  outgoingDeps     NodeDependency[] @relation("DepSource")
+  incomingDeps     NodeDependency[] @relation("DepTarget")
+  changelogEntries ChangelogEntry[]
+  payloadVersions  PayloadVersion[]
+  chatMessages     ChatMessage[]
+
+  @@map("nodes")
+}
+
+model NodeDependency {
+  id       String @id @default(cuid())
+  sourceId String @map("source_id")
+  targetId String @map("target_id")
+  source   Node   @relation("DepSource", fields: [sourceId], references: [id])
+  target   Node   @relation("DepTarget", fields: [targetId], references: [id])
+
+  @@unique([sourceId, targetId])
+  @@map("node_dependencies")
+}
+
+model ChangelogEntry {
+  id             String   @id @default(cuid())
+  nodeId         String   @map("node_id")
+  node           Node     @relation(fields: [nodeId], references: [id])
+  changeType     String   @map("change_type")
+  previousStatus String?  @map("previous_status")
+  newStatus      String?  @map("new_status")
+  summary        String?
+  author         String
+  authorType     String   @map("author_type")
+  timestamp      DateTime @default(now())
+
+  @@map("changelog_entries")
+}
+
+model PayloadVersion {
+  id         String   @id @default(cuid())
+  nodeId     String   @map("node_id")
+  node       Node     @relation(fields: [nodeId], references: [id])
+  version    Int
+  payload    Json
+  author     String
+  authorType String   @map("author_type")
+  timestamp  DateTime @default(now())
+
+  @@unique([nodeId, version])
+  @@map("payload_versions")
+}
+
+model IdCounter {
+  prefix String @id
+  count  Int    @default(0)
+
+  @@map("id_counters")
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  nodeId      String   @map("node_id")
+  node        Node     @relation(fields: [nodeId], references: [id])
+  role        String
+  authorLabel String   @map("author_label")
+  authorType  String   @map("author_type")
+  userId      String?  @map("user_id")
+  sessionId   String?  @map("session_id")
+  content     String   @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([nodeId])
+  @@map("chat_messages")
+}

@@ -1,0 +1,15 @@
+.status-dropdown {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  color: var(--text-0);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  width: auto;
+}
+
+.status-dropdown[data-status="not_started"] { border-color: var(--status-not_started); }
+.status-dropdown[data-status="building"] { border-color: var(--status-building); color: var(--status-building); }
+.status-dropdown[data-status="built"] { border-color: var(--status-built); color: var(--status-built); }
+.status-dropdown[data-status="deprecated"] { border-color: var(--status-deprecated); color: var(--status-deprecated); }
