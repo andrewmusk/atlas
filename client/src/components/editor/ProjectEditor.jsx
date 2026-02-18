@@ -7,6 +7,15 @@ import ConfirmModal from '../shared/ConfirmModal.jsx';
 import './NodeEditor.css';
 import './ProjectEditor.css';
 
+const SECTIONS = [
+  { key: 'problem', label: 'The Problem' },
+  { key: 'opportunity', label: 'The Opportunity' },
+  { key: 'why_now', label: 'Why Now' },
+  { key: 'what_were_building', label: "What We're Building" },
+  { key: 'roadmap', label: 'Roadmap' },
+  { key: 'revenue', label: 'Revenue' },
+];
+
 export default function ProjectEditor({ node }) {
   const [fields, setFields] = useState({ ...node.payload });
   const [showDelete, setShowDelete] = useState(false);
@@ -15,27 +24,7 @@ export default function ProjectEditor({ node }) {
   const selectNode = useAtlasStore((s) => s.selectNode);
 
   const save = (updated) => savePayload({ payload: updated });
-
   const handleBlur = () => save(fields);
-
-  const constraints = Array.isArray(fields.constraints) ? fields.constraints : [];
-
-  const updateConstraint = (i, val) => {
-    const next = constraints.map((c, idx) => idx === i ? val : c);
-    setFields((f) => ({ ...f, constraints: next }));
-  };
-
-  const removeConstraint = (i) => {
-    const next = constraints.filter((_, idx) => idx !== i);
-    const updated = { ...fields, constraints: next };
-    setFields(updated);
-    save(updated);
-  };
-
-  const addConstraint = () => {
-    const next = [...constraints, ''];
-    setFields((f) => ({ ...f, constraints: next }));
-  };
 
   return (
     <div className="editor-container">
@@ -57,41 +46,17 @@ export default function ProjectEditor({ node }) {
           />
         </div>
 
-        <div className="field-group">
-          <label>Mission</label>
-          <textarea
-            value={fields.mission || ''}
-            onChange={(e) => setFields((f) => ({ ...f, mission: e.target.value }))}
-            onBlur={handleBlur}
-            rows={3}
-          />
-        </div>
-
-        <div className="field-group">
-          <label>Constraints</label>
-          <div className="constraint-list">
-            {constraints.map((c, i) => (
-              <div key={i} className="constraint-row">
-                <input
-                  value={c}
-                  onChange={(e) => updateConstraint(i, e.target.value)}
-                  onBlur={handleBlur}
-                  placeholder="The system must..."
-                />
-                <button
-                  className="constraint-remove"
-                  onClick={() => removeConstraint(i)}
-                  title="Remove"
-                >
-                  ✕
-                </button>
-              </div>
-            ))}
-            <button className="btn btn-ghost constraint-add" onClick={addConstraint}>
-              + Add constraint
-            </button>
+        {SECTIONS.map(({ key, label }) => (
+          <div className="field-group" key={key}>
+            <label>{label}</label>
+            <textarea
+              value={fields[key] || ''}
+              onChange={(e) => setFields((f) => ({ ...f, [key]: e.target.value }))}
+              onBlur={handleBlur}
+              rows={3}
+            />
           </div>
-        </div>
+        ))}
 
         <div className="editor-actions">
           <button className="btn btn-danger" onClick={() => setShowDelete(true)}>Delete</button>

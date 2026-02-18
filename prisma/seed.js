@@ -76,13 +76,12 @@ async function seed() {
     status: 'building',
     payload: {
       name: 'Atlas',
-      mission: 'Give agents and humans a shared, queryable state of what a company is building.',
-      constraints: [
-        'API must be queryable from external apps',
-        'Chat history per node must be exportable as structured JSON',
-        'Node schema must be stable enough to version',
-        'Snapshot exports must be re-importable to seed a new project',
-      ],
+      problem: 'Teams and agents have no shared, structured view of what is being built. Context lives in scattered docs, chat threads, and people\'s heads.',
+      opportunity: 'A single queryable state machine that both humans and AI agents can read and write — the source of truth for what a company is building.',
+      why_now: 'AI agents are becoming real collaborators, but they need structured context to be useful. Without it, every session starts from scratch.',
+      what_were_building: 'A web app where you define your project as a hierarchy of systems, subsystems, and requirements — then refine them through conversation with AI.',
+      roadmap: 'Phase 1: Core hierarchy + chat. Phase 2: Guided build flow. Phase 3: Snapshots and diffing.',
+      revenue: '',
     },
   });
   console.log(`${projId}  Atlas (project)`);
