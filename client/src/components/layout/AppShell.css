@@ -1,6 +1,6 @@
 .app-shell {
   display: grid;
-  grid-template-columns: 280px 1fr 380px;
+  grid-template-columns: 280px 4px 1fr 4px 380px;
   height: 100vh;
   overflow: hidden;
   background: var(--bg-0);
@@ -13,4 +13,17 @@
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   background: var(--bg-0);
+}
+
+.resize-handle {
+  width: 4px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background 0.15s;
+  z-index: 10;
+}
+
+.resize-handle:hover,
+.resize-handle:active {
+  background: var(--accent);
 }
