@@ -1,27 +1,61 @@
-import { useState, useCallback } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getChat, postMessage, streamAiResponse } from '../api/atlas.js';
+import { useState, useCallback, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getNodeChats, createChat, getChat, postChatMessage, streamChatAiResponse } from '../api/atlas.js';
 
-export function useChat(nodeId) {
+/**
+ * List all chats for a node.
+ */
+export function useChats(nodeId) {
+  return useQuery({
+    queryKey: ['chats', nodeId],
+    queryFn: () => getNodeChats(nodeId),
+    enabled: !!nodeId,
+  });
+}
+
+/**
+ * Create a new chat for a node.
+ */
+export function useCreateChat(nodeId) {
   const qc = useQueryClient();
-  const [streamingMessage, setStreamingMessage] = useState(null); // { content: string } while streaming
+  return useMutation({
+    mutationFn: (data) => createChat(nodeId, data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['chats', nodeId] });
+    },
+  });
+}
+
+/**
+ * Manage a single chat: messages, streaming, and proposals.
+ */
+export function useChat(chatId) {
+  const qc = useQueryClient();
+  const [streamingMessage, setStreamingMessage] = useState(null);
+  const [proposals, setProposals] = useState([]);
+
+  // Clear ephemeral state when switching chats
+  useEffect(() => {
+    setStreamingMessage(null);
+    setProposals([]);
+  }, [chatId]);
 
   const query = useQuery({
-    queryKey: ['chat', nodeId],
-    queryFn: () => getChat(nodeId),
-    enabled: !!nodeId,
+    queryKey: ['chat', chatId],
+    queryFn: () => getChat(chatId),
+    enabled: !!chatId,
   });
 
   const sendMessage = useCallback(
     async ({ content, author, authorType, sessionId }) => {
-      const msg = await postMessage(nodeId, { content, author, authorType, sessionId });
-      qc.setQueryData(['chat', nodeId], (old) => {
+      const msg = await postChatMessage(chatId, { content, author, authorType, sessionId });
+      qc.setQueryData(['chat', chatId], (old) => {
         if (!old) return old;
         return { ...old, messages: [...old.messages, msg] };
       });
       return msg;
     },
-    [nodeId, qc]
+    [chatId, qc]
   );
 
   const sendAiMessage = useCallback(
@@ -29,7 +63,7 @@ export function useChat(nodeId) {
       // Optimistically show human message
       const optimisticHuman = {
         id: `temp-${Date.now()}`,
-        nodeId,
+        chatId,
         role: 'user',
         authorLabel: author,
         authorType,
@@ -37,15 +71,16 @@ export function useChat(nodeId) {
         createdAt: new Date().toISOString(),
       };
 
-      qc.setQueryData(['chat', nodeId], (old) => {
+      qc.setQueryData(['chat', chatId], (old) => {
         if (!old) return old;
         return { ...old, messages: [...old.messages, optimisticHuman] };
       });
 
+      setProposals([]);
       setStreamingMessage({ content: '' });
 
       try {
-        const body = await streamAiResponse(nodeId, content, author, authorType, sessionId);
+        const body = await streamChatAiResponse(chatId, content, author, authorType, sessionId);
         const reader = body.getReader();
         const decoder = new TextDecoder();
         let buffer = '';
@@ -65,7 +100,8 @@ export function useChat(nodeId) {
             if (data === '[DONE]') {
               setStreamingMessage(null);
               // Refresh the full thread to get the persisted AI message
-              qc.invalidateQueries({ queryKey: ['chat', nodeId] });
+              qc.invalidateQueries({ queryKey: ['chat', chatId] });
+              qc.invalidateQueries({ queryKey: ['chats'] }); // update last message preview
               return;
             }
             try {
@@ -73,6 +109,8 @@ export function useChat(nodeId) {
               if (parsed.token) {
                 accumulated += parsed.token;
                 setStreamingMessage({ content: accumulated });
+              } else if (parsed.type === 'proposal') {
+                setProposals((prev) => [...prev, parsed.proposal]);
               }
             } catch {}
           }
@@ -83,8 +121,8 @@ export function useChat(nodeId) {
         throw err;
       }
     },
-    [nodeId, qc]
+    [chatId, qc]
   );
 
-  return { ...query, streamingMessage, sendMessage, sendAiMessage };
+  return { ...query, streamingMessage, proposals, sendMessage, sendAiMessage };
 }

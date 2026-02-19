@@ -1,0 +1,110 @@
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.chat-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--border, #333);
+  flex-shrink: 0;
+}
+
+.chat-list-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2, #999);
+  font-weight: 600;
+}
+
+.chat-list-new {
+  font-size: 12px;
+  padding: 3px 10px;
+  background: var(--surface-2, #1a1a2e);
+  border: 1px solid var(--border, #333);
+  border-radius: 4px;
+  color: var(--text-1, #e0e0e0);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.chat-list-new:hover {
+  border-color: #666;
+}
+
+.chat-list-new:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-list-loading {
+  padding: 16px 14px;
+  color: var(--text-2, #999);
+  font-size: 12px;
+}
+
+.chat-list-empty {
+  padding: 24px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-2, #999);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.chat-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  border: none;
+  border-bottom: 1px solid var(--border, #222);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  transition: background 0.1s;
+}
+
+.chat-list-item:hover {
+  background: var(--surface-2, #1a1a2e);
+}
+
+.chat-list-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.chat-list-item-title {
+  font-size: 12px;
+  color: var(--text-1, #e0e0e0);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-list-item-count {
+  font-size: 10px;
+  color: var(--text-2, #999);
+  flex-shrink: 0;
+}
+
+.chat-list-item-preview {
+  font-size: 11px;
+  color: var(--text-2, #999);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}

@@ -13,7 +13,11 @@ function getSessionId() {
 const useAtlasStore = create((set, get) => ({
   // The currently selected node ID (drives center + right panels)
   selectedNodeId: null,
-  selectNode: (id) => set({ selectedNodeId: id }),
+  selectNode: (id) => set({ selectedNodeId: id, selectedChatId: null }),
+
+  // The currently open chat ID (null = show chat list)
+  selectedChatId: null,
+  selectChat: (id) => set({ selectedChatId: id }),
 
   // Expand/collapse state for tree nodes
   expandedNodes: new Set(),

@@ -41,13 +41,17 @@ export const addDependency = (id, targetId) =>
 export const removeDependency = (id, targetId) =>
   request('DELETE', `/nodes/${id}/dependencies/${targetId}`);
 
-// Chat
-export const getChat = (id) => request('GET', `/nodes/${id}/chat`);
-export const postMessage = (id, data) => request('POST', `/nodes/${id}/chat`, data);
+// Node-level chats
+export const getNodeChats = (nodeId) => request('GET', `/nodes/${nodeId}/chats`);
+export const createChat = (nodeId, data) => request('POST', `/nodes/${nodeId}/chats`, data || {});
 
-// AI streaming — returns ReadableStream
-export async function streamAiResponse(nodeId, content, author, authorType, sessionId) {
-  const res = await fetch(`${BASE}/nodes/${nodeId}/chat/ai`, {
+// Chat-level operations
+export const getChat = (chatId) => request('GET', `/chats/${chatId}`);
+export const postChatMessage = (chatId, data) => request('POST', `/chats/${chatId}/messages`, data);
+
+// AI streaming for a chat — returns ReadableStream
+export async function streamChatAiResponse(chatId, content, author, authorType, sessionId) {
+  const res = await fetch(`${BASE}/chats/${chatId}/ai`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ content, author, authorType, sessionId }),

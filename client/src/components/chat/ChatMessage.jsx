@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import NodeIdLink from './NodeIdLink.jsx';
+import ProposalCard from './ProposalCard.jsx';
 import './ChatMessage.css';
 
 function formatTime(ts) {
@@ -16,8 +17,23 @@ function extractText(children) {
   return String(children ?? '');
 }
 
-export default function ChatMessage({ message, streaming = false }) {
+export default function ChatMessage({ message, streaming = false, nodeId }) {
   const isHuman = message.role === 'user';
+
+  // Parse structured content for persisted AI messages with proposals
+  let textContent = message.content;
+  let inlineProposals = [];
+  if (!isHuman && !streaming) {
+    try {
+      const parsed = JSON.parse(message.content);
+      if (parsed && typeof parsed.text === 'string') {
+        textContent = parsed.text;
+        inlineProposals = Array.isArray(parsed.proposals) ? parsed.proposals : [];
+      }
+    } catch {
+      // plain text — use as-is
+    }
+  }
 
   return (
     <div className={`chat-message ${isHuman ? 'human' : 'ai'} ${streaming ? 'streaming' : ''}`}>
@@ -29,16 +45,23 @@ export default function ChatMessage({ message, streaming = false }) {
       </div>
       <div className="chat-message-body">
         {isHuman ? (
-          <p><NodeIdLink text={message.content} /></p>
+          <p><NodeIdLink text={textContent} /></p>
         ) : (
-          <ReactMarkdown
-            components={{
-              p: ({ children }) => <p><NodeIdLink text={extractText(children)} /></p>,
-              li: ({ children }) => <li><NodeIdLink text={extractText(children)} /></li>,
-            }}
-          >
-            {message.content}
-          </ReactMarkdown>
+          <>
+            {textContent && (
+              <ReactMarkdown
+                components={{
+                  p: ({ children }) => <p><NodeIdLink text={extractText(children)} /></p>,
+                  li: ({ children }) => <li><NodeIdLink text={extractText(children)} /></li>,
+                }}
+              >
+                {textContent}
+              </ReactMarkdown>
+            )}
+            {inlineProposals.map((proposal, i) => (
+              <ProposalCard key={i} proposal={proposal} nodeId={nodeId} />
+            ))}
+          </>
         )}
         {streaming && <span className="streaming-cursor">▌</span>}
       </div>

@@ -2,21 +2,21 @@ import { useChat } from '../../hooks/useChat.js';
 import useAtlasStore from '../../store/useAtlasStore.js';
 import ChatThread from '../chat/ChatThread.jsx';
 import ChatInput from '../chat/ChatInput.jsx';
-import NodeChatList from '../chat/NodeChatList.jsx';
+import ChatList from '../chat/ChatList.jsx';
 import './ChatPanel.css';
 
 export default function ChatPanel({ nodeId }) {
-  const { authorLabel, sessionId } = useAtlasStore();
+  const { authorLabel, sessionId, selectedChatId, selectChat } = useAtlasStore();
   const {
-    data,
+    data: chatData,
     isLoading,
     streamingMessage,
+    proposals,
     sendMessage,
     sendAiMessage,
-  } = useChat(nodeId);
+  } = useChat(selectedChatId);
 
-  const messages = data?.messages || [];
-  const nodeType = data?.node?.type || null;
+  const messages = chatData?.messages || [];
   const isStreaming = !!streamingMessage;
 
   const handleSend = async (content) => {
@@ -27,23 +27,42 @@ export default function ChatPanel({ nodeId }) {
     await sendAiMessage({ content, author: authorLabel, authorType: 'human', sessionId });
   };
 
+  const handleBack = () => selectChat(null);
+
   return (
     <aside className="chat-panel">
       <div className="panel-header">
-        <span className="panel-title">
-          {nodeId ? `Chat · ${nodeId}` : 'Chat'}
-        </span>
-        {isLoading && <span style={{ fontSize: 11, color: 'var(--text-2)' }}>loading…</span>}
+        {selectedChatId ? (
+          <>
+            <button className="chat-back-btn" onClick={handleBack} title="All conversations">
+              ‹
+            </button>
+            <span className="panel-title">
+              {nodeId ? `Chat · ${nodeId}` : 'Chat'}
+            </span>
+            {isLoading && <span style={{ fontSize: 11, color: 'var(--text-2)' }}>loading…</span>}
+          </>
+        ) : (
+          <span className="panel-title">
+            {nodeId ? `Chats · ${nodeId}` : 'Chat'}
+          </span>
+        )}
       </div>
 
       {!nodeId ? (
         <div className="empty-state">
           <span>Select a node to chat</span>
         </div>
+      ) : !selectedChatId ? (
+        <ChatList nodeId={nodeId} />
       ) : (
         <>
-          <NodeChatList nodeId={nodeId} nodeType={nodeType} />
-          <ChatThread messages={messages} streamingMessage={streamingMessage} />
+          <ChatThread
+            messages={messages}
+            streamingMessage={streamingMessage}
+            proposals={proposals}
+            nodeId={nodeId}
+          />
           <ChatInput onSend={handleSend} onAsk={handleAsk} disabled={isStreaming} />
         </>
       )}

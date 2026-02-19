@@ -23,7 +23,7 @@ model Node {
   incomingDeps     NodeDependency[] @relation("DepTarget")
   changelogEntries ChangelogEntry[]
   payloadVersions  PayloadVersion[]
-  chatMessages     ChatMessage[]
+  chats            Chat[]
 
   @@map("nodes")
 }
@@ -75,10 +75,22 @@ model IdCounter {
   @@map("id_counters")
 }
 
+model Chat {
+  id        String        @id @default(cuid())
+  nodeId    String        @map("node_id")
+  node      Node          @relation(fields: [nodeId], references: [id])
+  title     String?
+  createdAt DateTime      @default(now()) @map("created_at")
+  messages  ChatMessage[]
+
+  @@index([nodeId])
+  @@map("chats")
+}
+
 model ChatMessage {
   id          String   @id @default(cuid())
-  nodeId      String   @map("node_id")
-  node        Node     @relation(fields: [nodeId], references: [id])
+  chatId      String   @map("chat_id")
+  chat        Chat     @relation(fields: [chatId], references: [id])
   role        String
   authorLabel String   @map("author_label")
   authorType  String   @map("author_type")
@@ -87,6 +99,6 @@ model ChatMessage {
   content     String   @db.Text
   createdAt   DateTime @default(now()) @map("created_at")
 
-  @@index([nodeId])
+  @@index([chatId])
   @@map("chat_messages")
 }

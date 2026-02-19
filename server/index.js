@@ -6,6 +6,7 @@ import statusRouter from './routes/status.js';
 import childrenRouter from './routes/children.js';
 import dependenciesRouter from './routes/dependencies.js';
 import chatRouter from './routes/chat.js';
+import chatsRouter from './routes/chats.js';
 import projectsRouter from './routes/projects.js';
 import errorHandler from './middleware/errorHandler.js';
 
@@ -25,6 +26,7 @@ app.use('/api/nodes', statusRouter);
 app.use('/api/nodes', childrenRouter);
 app.use('/api/nodes', dependenciesRouter);
 app.use('/api/nodes', chatRouter);
+app.use('/api/chats', chatsRouter);
 
 // Serve static files (Vite build output)
 const distPath = join(__dirname, '../dist/public');

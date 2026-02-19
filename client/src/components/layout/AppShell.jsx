@@ -1,4 +1,5 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import TreePanel from './TreePanel.jsx';
 import ChatPanel from './ChatPanel.jsx';
 import NodeEditor from '../editor/NodeEditor.jsx';
@@ -46,10 +47,27 @@ function useResizeHandle(shellRef, side) {
 }
 
 export default function AppShell() {
+  const { nodeId: urlNodeId } = useParams();
+  const navigate = useNavigate();
   const selectedNodeId = useAtlasStore((s) => s.selectedNodeId);
+  const selectNode = useAtlasStore((s) => s.selectNode);
   const shellRef = useRef(null);
   const onResizeLeft = useResizeHandle(shellRef, 'left');
   const onResizeRight = useResizeHandle(shellRef, 'right');
+
+  // Sync URL → store on mount / URL change
+  useEffect(() => {
+    if (urlNodeId && urlNodeId !== selectedNodeId) {
+      selectNode(urlNodeId);
+    }
+  }, [urlNodeId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Sync store → URL when selected node changes
+  useEffect(() => {
+    if (selectedNodeId) {
+      navigate(`/node/${selectedNodeId}`, { replace: true });
+    }
+  }, [selectedNodeId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="app-shell" ref={shellRef}>

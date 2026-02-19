@@ -3,8 +3,8 @@ import { useCreateNode } from '../../hooks/useChildren.js';
 import './AddNodeModal.css';
 
 const TYPE_FIELDS = {
-  project: ['name', 'mission'],
-  system: ['name', 'description'],
+  project: ['name'],
+  system: ['name', 'description', 'core_value'],
   subsystem: ['name', 'abbreviation', 'purpose'],
   requirement: ['statement', 'priority', 'type'],
   flow: ['name', 'description'],
@@ -12,8 +12,8 @@ const TYPE_FIELDS = {
 
 const PLACEHOLDERS = {
   name: 'e.g. Atlas',
-  mission: 'e.g. Give agents a shared state of what we are building',
-  description: 'e.g. Handles node creation and validation',
+  description: 'e.g. A living, queryable representation of what a company is building',
+  core_value: 'e.g. Agents and humans share a single source of truth for what is being built',
   abbreviation: 'e.g. HIER (uppercase, 2-6 chars)',
   purpose: 'e.g. Owns the creation and organization of the full node graph',
   statement: 'The system shall...',
@@ -83,7 +83,7 @@ export default function AddNodeModal({ type, parentId, onClose, onCreated }) {
                   <option value="Non-functional">Non-functional</option>
                   <option value="Constraint">Constraint</option>
                 </select>
-              ) : field === 'statement' || field === 'purpose' || field === 'description' ? (
+              ) : field === 'statement' || field === 'purpose' || field === 'description' || field === 'core_value' ? (
                 <textarea
                   placeholder={PLACEHOLDERS[field] || ''}
                   value={fields[field] || ''}
