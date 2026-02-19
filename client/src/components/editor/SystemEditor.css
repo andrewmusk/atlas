@@ -1,0 +1,145 @@
+.editor-section {
+  margin-bottom: 24px;
+}
+
+.editor-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.editor-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.editor-section-count {
+  font-size: 10px;
+  color: var(--text-2);
+  margin-left: 6px;
+}
+
+.list-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 6px;
+}
+
+.list-item-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.list-item-fields input,
+.list-item-fields textarea {
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+.list-item-fields textarea {
+  min-height: 40px;
+}
+
+.list-item-fields label {
+  font-size: 9px;
+  margin-bottom: 2px;
+}
+
+.list-item-row {
+  display: flex;
+  gap: 6px;
+}
+
+.list-item-row > * {
+  flex: 1;
+}
+
+.list-item-remove {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  border-radius: var(--radius);
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.list-item-remove:hover {
+  color: var(--danger);
+  background: var(--bg-3);
+}
+
+.list-add-btn {
+  font-size: 11px;
+  color: var(--accent);
+  padding: 4px 0;
+}
+
+.list-add-btn:hover {
+  text-decoration: underline;
+}
+
+.collapsible-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 0;
+  color: var(--text-1);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+
+.collapsible-toggle:hover {
+  color: var(--text-0);
+}
+
+.collapsible-arrow {
+  font-size: 10px;
+  transition: transform 0.15s;
+}
+
+.collapsible-arrow.open {
+  transform: rotate(90deg);
+}
+
+.research-field {
+  margin-bottom: 12px;
+}
+
+.research-field label {
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+
+.research-field textarea {
+  font-size: 12px;
+  min-height: 100px;
+}
+
+.outcome-select {
+  width: auto;
+  min-width: 100px;
+  font-size: 11px;
+  padding: 3px 6px;
+}

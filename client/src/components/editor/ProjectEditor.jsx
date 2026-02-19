@@ -2,19 +2,9 @@ import { useState } from 'react';
 import { useUpdateNode, useDeleteNode } from '../../hooks/useNode.js';
 import useAtlasStore from '../../store/useAtlasStore.js';
 import StatusBadge from '../tree/StatusBadge.jsx';
-import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import ConfirmModal from '../shared/ConfirmModal.jsx';
+import ChildrenSection from './ChildrenSection.jsx';
 import './NodeEditor.css';
-import './ProjectEditor.css';
-
-const SECTIONS = [
-  { key: 'problem', label: 'The Problem' },
-  { key: 'opportunity', label: 'The Opportunity' },
-  { key: 'why_now', label: 'Why Now' },
-  { key: 'what_were_building', label: "What We're Building" },
-  { key: 'roadmap', label: 'Roadmap' },
-  { key: 'revenue', label: 'Revenue' },
-];
 
 export default function ProjectEditor({ node }) {
   const [fields, setFields] = useState({ ...node.payload });
@@ -46,23 +36,11 @@ export default function ProjectEditor({ node }) {
           />
         </div>
 
-        {SECTIONS.map(({ key, label }) => (
-          <div className="field-group" key={key}>
-            <label>{label}</label>
-            <textarea
-              value={fields[key] || ''}
-              onChange={(e) => setFields((f) => ({ ...f, [key]: e.target.value }))}
-              onBlur={handleBlur}
-              rows={3}
-            />
-          </div>
-        ))}
+        <ChildrenSection parentId={node.id} childType="system" label="Systems" />
 
         <div className="editor-actions">
           <button className="btn btn-danger" onClick={() => setShowDelete(true)}>Delete</button>
         </div>
-
-        <ChangelogPanel entries={node.changelogEntries || []} />
       </div>
 
       {showDelete && (

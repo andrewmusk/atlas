@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useUpdateNode } from '../../hooks/useNode.js';
 import StatusBadge from '../tree/StatusBadge.jsx';
-import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import ChildrenSection from './ChildrenSection.jsx';
 import './NodeEditor.css';
 
@@ -44,7 +43,6 @@ export default function SubsystemEditor({ node }) {
         </div>
 
         <ChildrenSection parentId={node.id} childType="requirement" label="Requirements" />
-        <ChangelogPanel entries={node.changelogEntries || []} />
       </div>
     </div>
   );

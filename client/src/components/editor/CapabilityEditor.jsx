@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useUpdateNode, useUpdateStatus } from '../../hooks/useNode.js';
 import StatusDropdown from '../shared/StatusDropdown.jsx';
-import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import './NodeEditor.css';
 
 export default function CapabilityEditor({ node }) {
@@ -40,7 +39,6 @@ export default function CapabilityEditor({ node }) {
           <textarea value={fields.notes || ''} onChange={(e) => setFields((f) => ({ ...f, notes: e.target.value }))} onBlur={handleBlur} rows={3} />
         </div>
 
-        <ChangelogPanel entries={node.changelogEntries || []} />
       </div>
     </div>
   );

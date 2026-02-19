@@ -1,15 +1,7 @@
 import { useState } from 'react';
 import { useUpdateNode } from '../../hooks/useNode.js';
 import StatusBadge from '../tree/StatusBadge.jsx';
-import ChangelogPanel from '../shared/ChangelogPanel.jsx';
 import './NodeEditor.css';
-import './RequirementEditor.css';
-
-function formatTime(ts) {
-  return new Date(ts).toLocaleString(undefined, {
-    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
-  });
-}
 
 export default function RequirementEditor({ node }) {
   const [fields, setFields] = useState({ ...node.payload });
@@ -57,20 +49,6 @@ export default function RequirementEditor({ node }) {
           />
         </div>
 
-        {node.payloadVersions && node.payloadVersions.length > 0 && (
-          <div className="version-history">
-            <div className="version-header">Version History ({node.payloadVersions.length})</div>
-            {[...node.payloadVersions].reverse().map((v) => (
-              <div key={v.id} className="version-entry">
-                <span className="version-num">v{v.version}</span>
-                <span className="version-author">{v.author}</span>
-                <span className="version-time">{formatTime(v.timestamp)}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <ChangelogPanel entries={node.changelogEntries || []} />
       </div>
     </div>
   );
